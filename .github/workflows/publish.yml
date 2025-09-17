@@ -38,9 +38,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags:
-            - thedjaney/demo-project:latest
-            - thedjaney/demo-project:${{github.ref_name}}
+          tags: thedjaney/demo-project:latest,thedjaney/demo-project:${{github.ref_name}}
 
       - name: Build and push migration
         id: push-migration
@@ -49,9 +47,7 @@ jobs:
           context: .
           file: ./migration.Dockerfile
           push: true
-          tags:
-            - thedjaney/demo-project:latest-migration
-            - thedjaney/demo-project:${{github.ref_name}}-migration
+          tags: thedjaney/demo-project:latest-migration,thedjaney/demo-project:${{github.ref_name}}-migration
 
       - name: Generate artifact attestation for app
         uses: actions/attest-build-provenance@v3
