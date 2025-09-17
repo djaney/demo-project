@@ -1,0 +1,38 @@
+version: '3.8' # Specify the Compose file format version
+
+services:
+  app:
+    build: . # Build the image from the current directory (Dockerfile expected)
+    ports:
+      - "3000:3000"
+    environment:
+      # Define environment variables for the service
+      SQLALCHEMY_DATABASE_URI: postgresql://user:password@db:5432/mydatabase
+    volumes:
+      - .:/app # Mount the local project directory into the container
+    restart: "unless-stopped"
+    depends_on:
+      - db
+
+  migration:
+    build:
+      context: .
+      dockerfile: migration.Dockerfile
+    restart: "no"
+    environment:
+      # Define environment variables for the service
+      SQLALCHEMY_DATABASE_URI: postgresql://user:password@db:5432/mydatabase
+    volumes:
+      - .:/app # Mount the local project directory into the container
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13 # Use a specific version of PostgreSQL
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    restart: "unless-stopped"
+    ports:
+      - "5432:5432"
