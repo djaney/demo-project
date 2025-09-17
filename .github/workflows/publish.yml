@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          file: ./migration.Dockerfile
           push: true
           tags: thedjaney/demo-project:latest-migration
 
