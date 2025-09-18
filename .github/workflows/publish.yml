@@ -41,7 +41,7 @@ jobs:
           tags: thedjaney/demo-project:latest,thedjaney/demo-project:${{github.ref_name}}
 
       - name: Build and push worker
-        id: push-main
+        id: push-worker
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -64,6 +64,13 @@ jobs:
         with:
           subject-name: index.docker.io/thedjaney/demo-project
           subject-digest: ${{ steps.push-main.outputs.digest }}
+          push-to-registry: true
+
+      - name: Generate artifact attestation for worker
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-name: index.docker.io/thedjaney/demo-project
+          subject-digest: ${{ steps.push-worker.outputs.digest }}
           push-to-registry: true
 
       - name: Generate artifact attestation for migration
