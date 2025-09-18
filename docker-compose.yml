@@ -13,6 +13,19 @@ services:
     restart: "unless-stopped"
     depends_on:
       - db
+  worker:
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    environment:
+      # Define environment variables for the service
+      SQLALCHEMY_DATABASE_URI: postgresql://user:password@db:5432/mydatabase
+      API_URL: http://app:3000
+    volumes:
+      - .:/app # Mount the local project directory into the container
+    restart: "unless-stopped"
+    depends_on:
+      - db
 
   migration:
     build:

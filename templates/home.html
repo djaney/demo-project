@@ -1,6 +1,6 @@
 <!doctype html>
 <ul>
 {% for visit in visits %}
-  <li>{{ visit.origin}} visited {{ (now - visit.visited_at).seconds }}s ago.</li>
+  <li>{{ visit.origin}} visited {{ (now - visit.visited_at).seconds }}s ago. {% if visit.verified %}verified using worker{% endif %}</li>
 {% endfor %}
 </ul>

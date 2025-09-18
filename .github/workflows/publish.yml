@@ -40,6 +40,16 @@ jobs:
           push: true
           tags: thedjaney/demo-project:latest,thedjaney/demo-project:${{github.ref_name}}
 
+      - name: Build and push worker
+        id: push-main
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./worker.Dockerfile
+          push: true
+          tags: thedjaney/demo-project:latest-worker,thedjaney/demo-project:${{github.ref_name}}-worker
+
+
       - name: Build and push migration
         id: push-migration
         uses: docker/build-push-action@v6
